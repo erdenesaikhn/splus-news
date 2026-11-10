@@ -1,5 +1,16 @@
 // Netlify build: site-src/ → dist/, орчны хувьсагчаас config.js ба _redirects үүсгэнэ.
-import { cpSync, mkdirSync, rmSync, writeFileSync, existsSync } from 'node:fs';
+import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { dirname } from 'node:path';
+
+// Хавтсуудыг (site-src, netlify) bundle.json-оос задлана — GitHub дээр хавтас оруулах шаардлагагүй болгоно.
+if (existsSync('bundle.json')) {
+  const b = JSON.parse(readFileSync('bundle.json', 'utf8'));
+  for (const [p, data] of Object.entries(b)) {
+    mkdirSync(dirname(p), { recursive: true });
+    writeFileSync(p, Buffer.from(data, 'base64'));
+  }
+  console.log('bundle задарлаа:', Object.keys(b).length, 'файл');
+}
 
 const need = ['SUPABASE_URL', 'SUPABASE_ANON_KEY'];
 for (const k of need) if (!process.env[k]) { console.error(`Орчны хувьсагч дутуу: ${k}`); process.exit(1); }
