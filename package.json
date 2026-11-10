@@ -1,0 +1,8 @@
+{
+  "name": "splus-news",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node build.mjs", "migrate": "node scripts/migrate.mjs" },
+  "dependencies": { "@supabase/supabase-js": "^2.45.4" }
+}
