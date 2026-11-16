@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/splusmn/public_html/
+    - /usr/local/bin/php unpack.php
